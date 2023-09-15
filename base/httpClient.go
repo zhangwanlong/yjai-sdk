@@ -1,7 +1,6 @@
 package base
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -25,12 +24,11 @@ func NewHttpClient(apikey string, apisecret string, timeOut int64) *httpClient {
 }
 
 func (h httpClient) RequestPost(requerstUrl string, values url.Values) (responseStr string, err error) {
+	if err != nil {
+		return
+	}
 	// 请求时的时间戳秒数
 	now := fmt.Sprintf("%d", time.Now().Unix())
-	t, err := json.Marshal(h)
-	fmt.Println("----")
-	fmt.Println(string(t))
-	fmt.Println(h.Apikey)
 	//return
 	values.Add("apikey", h.Apikey)
 	values.Add("timestamp", now)

@@ -1,6 +1,7 @@
 package draw
 
 import (
+	"github.com/google/go-querystring/query"
 	"github.com/zhangwanlong/yjai-sdk/base"
 	"net/url"
 )
@@ -44,15 +45,36 @@ func (c *Client) GetDrawSelector() (ret string, err error) {
 
 // 开启批量绘画任务
 func (c *Client) PutBatchTask(data base.PutBatchTask) (ret string, err error) {
+	//验证参数
 	err = base.ValidatorData(data)
 	if err != nil {
 		return
 	}
+	queryValues, err := query.Values(data)
 
-	//验证参数
+	if err != nil {
+		return
+	}
 	requestUrl := c.SdkConfig.Host + c.SdkConfig.PutBatchTask
 	httpClient := base.NewHttpClient(c.Credentials.Apikey, c.Credentials.Apisecret, 10)
-	queryValues := url.Values{}
+	ret, err = httpClient.RequestPost(requestUrl, queryValues)
+	return
+}
+
+// 开启批量绘画任务
+func (c *Client) PutBatchControlTask(data base.PutBatchControlTask) (ret string, err error) {
+	//验证参数
+	err = base.ValidatorData(data)
+	if err != nil {
+		return
+	}
+	queryValues, err := query.Values(data)
+
+	if err != nil {
+		return
+	}
+	requestUrl := c.SdkConfig.Host + c.SdkConfig.PutBatchControlTask
+	httpClient := base.NewHttpClient(c.Credentials.Apikey, c.Credentials.Apisecret, 10)
 	ret, err = httpClient.RequestPost(requestUrl, queryValues)
 	return
 }
