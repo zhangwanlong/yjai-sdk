@@ -1,4 +1,5 @@
-host: http://127.0.0.1:8081/painting-open-api
+#host: http://127.0.0.1:8081/painting-open-api
+host: http://prod-cn.your-api-server.com
 getDrawSelector: /site/v2/draw/get_draw_selector
 putBatchTask: /site/v2/draw/put_batch_task
 putBatchControlTask: /site/v2/draw/put_batch_control_task
